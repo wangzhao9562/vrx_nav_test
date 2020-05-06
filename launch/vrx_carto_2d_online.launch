@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find vrx_gazebo)/launch/vrx.launch" />
+  <include file="$(find vrx_nav_test)/launch/include/carto_2d_online_config.launch" />
+  <!-- include file="$(find wamv_gazebo)/launch/localization_example.launch" /-->
+  <node pkg="rviz" type="rviz" name="wamv_vis" args="-d $(find vrx_nav_test)/rviz/rviz_vrx.rviz" />
+
+</launch>

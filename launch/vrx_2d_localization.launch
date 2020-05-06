@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<launch>
+  <node ns="wamv" pkg="robot_state_publisher" type="robot_state_publisher" name="wamv_state_pub">      
+    <param name="publish_frequency" value="20" />	  
+    <param name="tf_prefix" value="wamv" />
+    <param name="use_tf_static" value="true" type="bool" />
+  </node>
+
+  <node ns="wamv/robot_localization" pkg="robot_localization" type="navsat_transform_node" name="wamv_navsat_global" respawn="true" output="screen">
+    <param name="tf_prefix" value="wamv"/>
+    <!--param name="frequency" value="60"/-->
+    <param name="zero_altitude" value="true"/>
+    <param name="magnetic_declination_radians" value="0"/>
+    <param name="broadcast_utm_transform" value="true"/>
+    <param name="wait_for_datum" value="false"/>
+    <!--param name="use_odometry_yaw" value="true"/-->
+    <!--rosparam param="datum">[21.309352, -157.885778, -0.0781623, map, wamv/base_link]</rosparam-->
+    <rosparam param="datum">[21.309352, -157.885778, 0, map, wamv/base_link]</rosparam>
+    <!--param name="yaw_offset" value="0"/-->
+    <param name="publish_filtered_gps" value="true"/>
+
+    <remap to="/wamv/sensors/gps/gps/fix" from="/wamv/robot_localization/gps/fix"/>
+    <remap to="/wamv/odometry/gps_map" from="/wamv/robot_localization/odometry/gps"/>
+  </node>
+
+  <node ns="wamv/robot_localization" pkg="robot_localization" type="navsat_transform_node" name="wamv_navsat_local" respawn="true" output="screen">
+    <param name="tf_prefix" value="wamv"/>
+    <!--param name="frequency" value="60"/-->
+    <param name="zero_altitude" value="true"/>
+    <param name="magnetic_declination_radians" value="0"/>
+    <param name="broadcast_utm_transform" value="true"/>
+    <param name="wait_for_datum" value="false"/>
+    <!--param name="use_odometry_yaw" value="true"/-->
+    <!--rosparam param="datum">[21.309352, -157.885778, -0.0781623, map, wamv/base_link]</rosparam-->
+    <rosparam param="datum">[21.309352, -157.885778, 0, wamv/odom, wamv/base_link]</rosparam>
+    <!--param name="yaw_offset" value="0"/-->
+    <param name="publish_filtered_gps" value="true"/>
+
+    <remap to="/wamv/sensors/gps/gps/fix" from="/wamv/robot_localization/gps/fix"/>
+    <remap to="/wamv/odometry/gps_odom" from="/wamv/robot_localization/odometry/gps"/>
+  </node>
+
+  <node ns="wamv/robot_localization" pkg="robot_localization" type="ekf_localization_node" name="wamv_ekf_se_odom" clear_params="false">
+    <param name="sensor_timeout" value="2.0" />
+    <param name="transform_timeout_offset" value="0.0" />
+    <param name="two_d_mode" value="true" />
+    <!--param name="map_frame" value="map" /-->
+    <param name="odom_frame" value="wamv/odom" />
+    <param name="base_link_frame" value="wamv/base_link" />
+    <param name="world_frame" value="wamv/odom" />
+    <param name="publish_tf" value="true" />
+    <param name="frequency" value="10" />
+    <param name="imu0" value="/wamv/sensors/imu/imu/data" />
+    <rosparam param="imu0_config">[false, false, false,
+                                   true,  true,  true,
+                                   false,  false,  false,
+                                   true,  true,  true,
+                                   true,  true,  true]</rosparam>
+
+    <param name="imu0_differential" value="false"/>
+    <param name="imu0_remove_gravitational_acceleration" value="true" />
+    <param name="odom0" value="/wamv/odometry/gps_odom" />
+    <rosparam param="odom0_config">[true,  true,  true,
+                                    false, false, false,
+                                    false, false, false,
+                                    false, false, false,
+                                    false, false, false]</rosparam>
+    <param name="odom0_differential" value="false"/>
+    <param name="smooth_lagged_data" value="true"/>
+    <remap from="/wamv/robot_localization/odometry/filtered" to="/wamv/odometry/filtered_odom"/>
+  </node>
+  <node ns="wamv/robot_localization" pkg="robot_localization" type="ekf_localization_node" name="wamv_ekf_se_map" clear_params="true" output="screen">
+    <param name="sensor_timeout" value="2.0" />
+    <param name="transform_timeout_offset" value="0.0" />
+    <param name="two_d_mode" value="true" />
+    <param name="map_frame" value="map" />
+    <param name="odom_frame" value="wamv/odom" />
+    <param name="base_link_frame" value="wamv/base_link" />
+    <param name="world_frame" value="map" />
+    <param name="publish_tf" value="true" />
+    <param name="frequency" value="10" />
+    <param name="imu0" value="/wamv/sensors/imu/imu/data" />
+    <rosparam param="imu0_config">[false, false, false,
+                                   true,  true,  true,
+                                   false,  false,  false,
+                                   true,  true,  true,
+                                   true,  true,  true]</rosparam>
+
+    <param name="imu0_differential" value="false"/>
+    <param name="imu0_remove_gravitational_acceleration" value="true" />
+    <param name="odom0" value="/wamv/odometry/gps_map" />
+    <rosparam param="odom0_config">[true,  true,  true,
+                                    false, false, false,
+                                    false, false, false,
+                                    false, false, false,
+                                    false, false, false]</rosparam>
+    <param name="odom0_differential" value="false"/>
+    <param name="smooth_lagged_data" value="true"/>
+    <remap from="/wamv/robot_localization/odometry/filtered" to="/wamv/odometry/filtered_map"/>
+  </node>
+</launch>

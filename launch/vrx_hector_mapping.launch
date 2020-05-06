@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <param name="use_sim_time" value="false" />
+  <include file="$(find vrx_gazebo)/launch/vrx.launch" />
+  <include file="$(find vrx_nav_test)/launch/include/hector_mapping.launch" />
+  <include file="$(find vrx_nav_test)/launch/include/geotiff_mapper.launch" />
+  <!-- include file="$(find wamv_gazebo)/launch/localization_example.launch" /-->
+  <include file="$(find wamv_gazebo)/launch/rviz_vrx.launch" />
+</launch>

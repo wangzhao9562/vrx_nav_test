@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>vrx_nav_test</name>
+  <version>0.0.0</version>
+  <description>The vrx_nav_test package</description>
+
+  <maintainer email="wz9562@todo.todo">wz9562</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>map_server</build_depend>
+  <build_depend>move_base</build_depend>
+  <build_depend>hector_mapping</build_depend>
+  <build_depend>hector_trajectory_server</build_depend>
+  <build_depend>hector_geotiff</build_depend>
+  <build_depend>nodelet</build_depend>
+  <build_depend>robot_state_publisher</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>vrx_gazebo</build_depend>
+  <build_depend>wamv_description</build_depend>
+  <build_depend>wamv_gazebo</build_depend>
+  <build_export_depend>map_server</build_export_depend>
+  <build_export_depend>move_base</build_export_depend>
+  <build_export_depend>hector_mapping</build_export_depend>
+  <build_export_depend>hector_tajectory_server</build_export_depend>
+  <build_export_depend>hector_geotiff</build_export_depend>
+  <build_export_depend>nodelet</build_export_depend>
+  <build_export_depend>robot_state_publisher</build_export_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>vrx_gazebo</build_export_depend>
+  <build_export_depend>wamv_description</build_export_depend>
+  <build_export_depend>wamv_gazebo</build_export_depend>
+  <exec_depend>map_server</exec_depend>
+  <exec_depend>move_base</exec_depend>
+  <exec_depend>hector_mapping</exec_depend>
+  <exec_depend>hector_trajectory_server</exec_depend>
+  <exec_depend>hector_geotiff</exec_depend>
+  <exec_depend>nodelet</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>vrx_gazebo</exec_depend>
+  <exec_depend>wamv_description</exec_depend>
+  <exec_depend>wamv_gazebo</exec_depend>
+
+  <export>
+
+  </export>
+</package>

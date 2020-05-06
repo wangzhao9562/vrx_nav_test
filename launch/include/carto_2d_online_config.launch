@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- node ns="wamv" name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /-->
+
+  <node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node"         args="
+          -configuration_directory $(find vrx_nav_test)/launch/config
+          -configuration_basename vrx_carto_2d_online.lua" output="screen">
+    <remap from="points2" to="/wamv/sensors/lidars/lidar_wamv/points" />
+    <!--remap from="imu" to="/wamv/sensors/imu/imu/data" /-->
+    <remap from="odom" to="/wamv/odometry/filtered_odom" />
+    <!--remap from="fix" to="/wamv/sensors/gps/gps/fix" /-->
+  </node>
+
+  <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros" type="cartographer_occupancy_grid_node" args="-resolution 0.10" />
+</launch>
