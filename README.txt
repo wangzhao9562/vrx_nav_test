@@ -1,3 +1,3 @@
-# 'vrx_nav_test': Mapping, navigation simulation for wamv based on ROS environment
+# 'vrx_nav_test': Mapping, navigating simulation for wamv in ROS environment
 
  
