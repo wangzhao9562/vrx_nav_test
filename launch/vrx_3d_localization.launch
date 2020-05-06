@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <launch>
-  <node ns="wamv" pkg="robot_state_publisher" type="robot_state_publisher" name="wamv_state_pub">
+  <node ns="wamv" pkg="robot_state_publisher" type="robot_state_publisher" name="wamv_state_pub">      
+    <param name="publish_frequency" value="20" />	  
     <param name="tf_prefix" value="wamv" />
+    <param name="use_tf_static" value="true" type="bool" />
   </node>
 
   <node ns="wamv/robot_localization" pkg="robot_localization" type="navsat_transform_node" name="wamv_navsat_global" respawn="true" output="screen">
@@ -42,7 +44,6 @@
     <param name="sensor_timeout" value="2.0" />
     <param name="transform_timeout_offset" value="0.0" />
     <!--param name="two_d_mode" value="true" /-->
-    <param name="zero_coord_z" value="true"/>
     <!--param name="map_frame" value="map" /-->
     <param name="odom_frame" value="wamv/odom" />
     <param name="base_link_frame" value="wamv/base_link" />
@@ -71,7 +72,6 @@
   <node ns="wamv/robot_localization" pkg="robot_localization" type="ekf_localization_node" name="wamv_ekf_se_map" clear_params="true" output="screen">
     <param name="sensor_timeout" value="2.0" />
     <param name="transform_timeout_offset" value="0.0" />
-    <param name="zero_coord_z" value="true"/>
     <!--param name="two_d_mode" value="true" /-->
     <param name="map_frame" value="map" />
     <param name="odom_frame" value="wamv/odom" />
@@ -96,6 +96,6 @@
                                     false, false, false]</rosparam>
     <param name="odom0_differential" value="false"/>
     <param name="smooth_lagged_data" value="true"/>
-    <remap to="/wamv/robot_localization/odometry/filtered" from="/wamv/odometry/filtered_map"/>
+    <remap from="/wamv/robot_localization/odometry/filtered" to="/wamv/odometry/filtered_map"/>
   </node>
 </launch>
