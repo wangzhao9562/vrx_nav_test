@@ -31,5 +31,7 @@ or
 sudo apt-get install ros-melodic-ros-localization
 
 ## 2D mapping
-roslaunch vrx_nav_test vrx_carto_2d_online.launch
-roslaunch vrx_nav_test vrx_2d_localization.launch or roslaunch vrx_nav_test vrx_extend_localization.launch 
+roslaunch vrx_nav_test vrx_carto_2d_online.launch  
+roslaunch vrx_nav_test vrx_2d_localization.launch  
+or  
+roslaunch vrx_nav_test vrx_extend_localization.launch 
