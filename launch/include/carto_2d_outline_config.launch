@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="namespace" value="wamv" />
+  <arg name="urdf" value="$(find wamv_gazebo)/urdf/wamv_gazebo.urdf.xacro"/>
+  <arg name="thrust_config" default="T" />
+  <arg name="wamv_locked" default="false" />
+  <arg name="vrx_sensors_enabled" default="true" />
+
+  <param name="$(arg namespace)/robot_description"
+         command="$(find xacro)/xacro &#x002D;&#x002D;inorder '$(arg urdf)'
+         locked:=$(arg wamv_locked)                
+         thruster_config:=$(arg thrust_config)
+         vrx_sensors_enabled:=$(arg vrx_sensors_enabled)
+         namespace:=$(arg namespace) "/>
+
+  <node ns="wamv" pkg="robot_state_publisher" type="robot_state_publisher" name="wamv_state_pub">
+    <param name="publish_frequency" value="20" />
+    <param name="tf_prefix" value="wamv" />
+    <param name="use_tf_static" value="true" type="bool" />
+  </node>
+
+  <node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node"         args="
+          -configuration_directory $(find vrx_nav_test)/launch/config
+          -configuration_basename vrx_carto_2d_outline.lua" output="screen">
+    <remap from="points2" to="/wamv/sensors/lidars/lidar_wamv/points" />
+    <!--remap from="imu" to="/wamv/sensors/imu/imu/data" /-->
+    <remap from="odom" to="/wamv/odometry/filtered_odom" />
+    <!--remap from="fix" to="/wamv/sensors/gps/gps/fix" /-->
+  </node>
+
+  <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros" type="cartographer_occupancy_grid_node" args="-resolution 0.10" />
+</launch>
