@@ -3,6 +3,8 @@
 Mapping, navigation simulation for wamv in ROS environment  
   
 Based on simulator: bitbucket.org/osrf/vrx  
+
+Package is in developping.
   
 ## Advance preparation  
 ### Vrx simulator  
