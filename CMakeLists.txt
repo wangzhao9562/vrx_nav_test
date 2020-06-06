@@ -17,9 +17,11 @@ find_package(catkin REQUIRED COMPONENTS
   vrx_gazebo
   wamv_description
   wamv_gazebo
+  nav_msgs
+  geometry_msgs
 )
 
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system)
 
 
 # catkin_python_setup()
@@ -46,8 +48,41 @@ find_package(catkin REQUIRED COMPONENTS
 #   Action2.action
 # )
 
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs  # Or other packages containing msgs
+)
+
+catkin_package(
+  CATKIN_DEPENDS
+    geometry_msgs
+    nav_msgs
+    roscpp
+)
+
+include_directories(
+  include
+  ${catkin_INCLUDE_DIRS}
+)
+
+add_library(kinematic_odom
+  src/kinematic_odom.cpp
+)
+
+target_link_libraries(kinematic_odom
+  ${catkin_LIBRARIES}
+)
+
+add_dependencies(kinematic_odom ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_executable(kinematic_odom_node
+  test/kinematic_odom_node.cpp
+)
+
+add_dependencies(kinematic_odom_node ${${PROJECT_NAME}catkin_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+target_link_libraries(kinematic_odom_node
+  kinematic_odom
+  ${catkin_LIBRARIES}
+)
 
